@@ -27,8 +27,8 @@ description: >-                        # used by seo meta and the atom feed
   bootstrap Jekyll theme with responsive web design
   and focuses on text presentation.
 
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ''
+# fill in the protocol & hostname for your site, e.g., 'https://ryze0323.github.io'
+url: 'https://ryze0323.github.io'
 
 github:
   username: github_username             # change to your github username
