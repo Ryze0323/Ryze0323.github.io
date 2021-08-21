@@ -1,97 +1,84 @@
----
-layout: page
-# The Home page layout
----
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} — Typora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--link href="http://fonts.googleapis.com/css?family=Playball" rel="stylesheet"-->
+  <link href="/assets/css/github.css" rel="stylesheet" />
+  <link href="/assets/css/pure-min.css" rel="stylesheet" />
+  <!--link href="/assets/css/jekyllthemes.css" rel="stylesheet" /-->
+  <link href="/assets/css/syntax.css" rel="stylesheet" />
+  <link href="/assets/css/typora-theme.css" rel="stylesheet" />
+  <link rel='icon' href='/assets/img/favicon-16.png' sizes='16x16'>
+  <link rel='icon' href='/assets/img/favicon-32.png' sizes='32x32'>
+  <link rel='icon' href='/assets/img/favicon-48.png' sizes='48x48'>
+  <link rel='icon' href='/assets/img/favicon-64.png' sizes='64x64'>
+  <link rel='icon' href='/assets/img/favicon-128.png' sizes='128x128'>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@typora" />
+  <meta name="twitter:title" content="Theme Gallery for Typora" />
+  <meta name="twitter:description" content="Download or share your Typora Themes." />
+  <meta name="twitter:image" content="/img/twitter-sum.png" />
+  <script>
+  if (window.location.protocol != "https:"){
+      window.location.protocol = "https";
+  }
+  </script>
+</head>
 
-{% include lang.html %}
 
-{% assign pinned = site.posts | where: "pin", "true" %}
-{% assign default = site.posts | where_exp: "item", "item.pin != true" %}
+<body>
 
-{% assign posts = "" | split: "" %}
-
-<!-- Get pinned posts -->
-
-{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
-{% assign pinned_num = pinned.size | minus: offset %}
-
-{% if pinned_num > 0 %}
-  {% for i in (offset..pinned.size) limit: pinned_num %}
-    {% assign posts = posts | push: pinned[i] %}
-  {% endfor %}
-{% else %}
-  {% assign pinned_num = 0 %}
-{% endif %}
+  <header class="pure-menu pure-menu-horizontal nav" id="header">
+    <div class="gallery">
+      <div class="product-name">Typora</div>
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item"><a href="http://typora.io" class="pure-menu-link">Home</a>
+        </li>
+        <li class='pure-menu-item  {% if page.url == "/" %} pure-menu-active {% endif %}'><a href="/" class="pure-menu-link" id="title-bar-feature-btn">Themes</a>
+        </li>
+        <li class='pure-menu-item  {% if page.url contains "/doc" %} pure-menu-active {% endif %}'><a href="/doc" class="pure-menu-link">Documents</a>
+        </li>
+      </ul>
+    </div>
+  </header>
 
 
-<!-- Get default posts -->
 
-{% assign default_beg = offset | minus: pinned.size %}
+  <div id="pagecontainer" class="container">
 
-{% if default_beg < 0 %}
-  {% assign default_beg = 0 %}
-{% endif %}
+    <div class="widebanner row">
+      <div class="span12">
+        <div class="banner72" id="banner72">
 
-{% assign default_num = paginator.posts | size | minus: pinned_num  %}
-{% assign default_end = default_beg | plus: default_num | minus: 1 %}
-
-{% if default_num > 0 %}
-  {% for i in (default_beg..default_end) %}
-    {% assign posts = posts | push: default[i] %}
-  {% endfor %}
-{% endif %}
-
-<div id="post-list">
-
-{% for post in posts %}
-
-  <div class="post-preview">
-    <h1>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        {% include no-linenos.html content=post.content %}
-        {{ content | markdownify | strip_html | truncate: 200 }}
-      </p>
+          <script type="text/javascript">
+            
+          </script>
+        </div>
+      </div>
     </div>
 
-    <div class="post-meta text-muted d-flex justify-content-between">
 
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        {% include timeago.html date=post.date tooltip=true %}
 
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        {% include read-time.html content=post.content %}
+    <div id="content">
+        {{ content }}
+    </div>
+  </div>
 
-        <!-- page views -->
-        {% if site.google_analytics.pv.proxy_endpoint or site.google_analytics.pv.cache_path %}
-        <i class="far fa-eye fa-fw"></i>
-        <span id="pv_{{-post.title-}}" class="pageviews">
-          <i class="fas fa-spinner fa-spin fa-fw"></i>
-        </span>
-        {% endif %}
-      </div>
+  <style type="text/css">
+    #post-footer a {
+      color: #445588;
+    }
+  </style>
 
-      {% if post.pin %}
-      <div class="pin">
-        <i class="fas fa-thumbtack fa-fw"></i>
-        <span>{{ site.data.locales[lang].post.pin_prompt }}</span>
-      </div>
-      {% endif %}
+   <footer id="post-footer" style="color: rgb(51, 51, 51); padding-top:50px; padding-bottom:50px; text-align:center;font-size:13px;">
 
-    </div> <!-- .post-meta -->
+      How to <a href="/doc/Install-Theme/">install</a> &#47; <a href="/doc/Write-Custom-Theme/">write</a> &#47; <a href="/doc/Submit-A-Theme/">submit</a> a theme
 
-  </div> <!-- .post-review -->
+  </footer>
 
-{% endfor %}
 
-</div> <!-- #post-list -->
 
-{% if paginator.total_pages > 0 %}
-  {% include post-paginator.html %}
-{% endif %}
+</body>
+</html>
