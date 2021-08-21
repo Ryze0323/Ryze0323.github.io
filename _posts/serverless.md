@@ -126,15 +126,61 @@
 
 ### REST API
 
+ - 자원에 고유한 URI를 부여하는 방식   
+ - 특징   
+   * 클라이언트/서버   
+     - 서버의 경우 API를 제공하고 클라이언트에서 사용자 인증아니 컨텍스트 등을 직접 관리하는 구조로 서로의 역활이 명확하기에 의존성이 낮아짐   
+   * 무상태   
+     - 상태가 존재 하지 않으며 요청 받은 정보에 대해 주고 받기만 함   
+   * 캐싱 처리 가능   
+     - HTTP 프로토콜 표준에서 사용하는 Last-Modified 태그나 E-Tag를 이용하여 캐싱 구현 가능   
+   * 계층화   
+     - 서버의 경우 다중 계층으로 구성 가능하며 보안, 암호화 계층, 로드 밸런싱을 추가하여 구조적으로 유연하게 관리 가능   
+   * Code-On-Demand   
+     - 서버로부터 스크립트를 받아 클라이언트에서 실행 가능   
+   * 인터페이스의 일관성   
+     - URI로 지정한 자원(Resource)에 대해 통일된 인터페이스를 수행하는 아키텍처 스타일로 언어나 플랫폼에 구애 받지 않지만 아래와 같은 일관성 제약조건이 필요함   
+       * Identification of resources: Resource를 URI로 식별한다   
+       * Manipulation of resources through representations: Representations(PUT, GET, DELETE, POST 등)를 전송하여 Resource를 조작한다   
+       * Self-Descriptive Messages: 메시지만으로 어떤 기능인지 이해할 수 있어야 한다. HTTP URI는 자원을, HTTP Method는 행위를, MIME Type은 표현 방식을 의미한다
 
-## 메시징 서비스   
+### HTTP API와 REST API 선택기준   
 
-### AaMazon SQS   
+ - 금액의 경우 HTTP API가 3배 저렴하며  대기시간 또한 최대 60% 이상 줄일 수 있음   
+ - HTTP API의 경우 프록시 기능만 제공하며 그에 최적화 되어 있음   
+ - HTTP API와 REST API 지원 정보   
 
- - AWS에서 제공하는 메시지 큐 서비스
- - MOM(Message Oriented Middleware): 비동기 메시지를 사용하는 프로그램 간의 데이터 송수신 미들웨어
- - 메시지 큐: MOM을 구현한 시스템
- - 오래 걸리는 통신이 있으면 사용자에게 우선적으로 보여주는 선처리와 비동기 통신을 이용하여 후처리 하는 것이 특징
- - RabbitMQ, ActiveMQ, Kafka 등이 존재
+<img src="./image/http vs rest 1.png" width="100%">   
+<img src="./image/http vs rest 2.png" width="100%">   
+
+### WebSocket API   
+
+ - 웹버전의 TCP 또는 Socket을 이용하여 서버와 클라이언트 간 소켓 연결을 통해 양 뱡혹 또는 데이터 전송이 가능한 기술   
+ - 최초 접속 시에는 HTTP를 사용하지만 연결 후 Websocket의 독자적인 프로토콜로 이루어짐   
  
+<img src="./image/webSocket.png" width="100%">   
 
+## 모니터링   
+
+### Amazon CloudWatch   
+ 
+ - Aws 리소스와 AWS에서 실시간으로 실행 중인 애플리케이션을 모니터링 함
+ 
+### Amazon CloudWatch의 기본 개념   
+
+ - 매트릭
+   * 시간순으로 정렬된 데이터 포인트 집합   
+   * 모니터링 중 변수와 데이터 포이트를 시간에 따라 해당 변수의 값과 연관시킬 수 있음   
+   * 이름, 네임스페이스 및 0개 이상의 차원으로 고유하게 정의 됨   
+   * 각 데이터 포인트에는 타임스탬프가 있음   
+ - 차원   
+   * 측정 기준은 측정항목의 고유 식별자이므로 측정 항목 중 하나에 고유한 이름/값 쌍을 추가할 때마다 해당 측정항목의 새로운 변형을 만듬   
+ - 통계
+   * 지정한 기간의 메트릭 데이터 집계로서 지정한 기간 내에 네임스페이스, 메트릭 이름, 차원을 사용하여 이루어짐   
+ - 경보 
+   * 아람을 사용하여 자동으로 작업을 시작 할 수 있음   
+   
+### Amazon CloudWatch Logs   
+ 
+ <img src="./image/cloudWatchLog1.png" width="100%">   
+ <img src="./image/cloudWatchLog2.png" width="100%">   

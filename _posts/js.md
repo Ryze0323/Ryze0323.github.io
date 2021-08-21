@@ -1,10 +1,16 @@
+---
+title: "Welcome to Jekyll!"
+date: 2017-10-20 08:26:28 -0400
+categories: jekyll update
+---
+
 # JavaScript 정리
 
 ### var, let, const  
   변수 선언 방식으로 모두 hoisting 함  
   > hoisting: 선언을 맨위로 올려 먼저하는거  
    * Temporal Dead Zone: 변수가 초기화되기 전에 액세스하려고 하면, var처럼 undefined를 반환하지 않고, ReferenceError가 발생
- 
+
   ```javascript
      console.log(test1)
      console.log(test2)
@@ -24,7 +30,7 @@
         var foo = 456
       }
       console.log(foo)
-      
+
       let foo2 = 123
       console.log(foo2)
       {
@@ -49,10 +55,10 @@
     const arrayTest = [1,2,3,4]
     arrayTest[0] = 2
     console.log(arrayTest)
-  ```
- 
+   ```
+
   * ##### 막기 위해 Object.freeze 사용해야함  
- 
+
   ```javascript
     const arrayTest2 = [1,2,3,4]
     Object.freeze(arrayTest2)
@@ -62,7 +68,7 @@
 
 ### 타입
   > Boolean  
- 
+
    * Boolean(string)의 경우 문자열의 길이가 0보다 크면 true 아니면 false임  
    * Boolean은 !!로 사용 가능: Boolean(string) === !!string   
    ```javascript
@@ -72,14 +78,14 @@
       console.log(!!'') //  false
       console.log(!!'23') //  true
      
-   ``` 
+   ```
   > number: javascript에서 사용하는 숫자 타입  
    * 매우 큰 수나 작은 수에 대한 사용 시 아래와 같이 처리 가능한 범위인지 확인 필요  
    ```javascript
       let numbertest = Number.MAX_SAFE_INTEGER
       Number.isSafeInteger(numbertest + numbertest) // 처리 가능한 범위 초과
       Number.isSafeInteger(numbertest - 10) //  처리 가능 범위 안  
-   ``` 
+   ```
    * 소수점 계산의 경우 부동소수점 문제에 의해 같은 같이지만 === false로 나오니 Number.EPSILON 이내면 같다고 보는게 맞음  
    ```javascript
       let n1 = 0.1
@@ -88,24 +94,24 @@
       console.log(n1 + n2 === n3) // 분명 값이 같으니 true가 반환되어야 하지만 false가 반환됨
       console.log(n3 - (n1 + n2) < Number.EPSILON) // 이렇게 사용하는 것을 추천
       console.log(Number.EPSILON) // 2.220446049250313e-16 이 값이 나옴
-   ``` 
-   
+   ```
+
   > bigint 타입: number에서 안정적으로 처리 가능한 MAX_SAFE_INTEGER 또는 Min_SAFE_INTEGER 범위를 벗어나는 정수에 대해 처리하는 타입  
    * 할당시 뒤에 n을 붙히거나 BigInt()로 사용  
    ```javascript
       let biginttest = 1n
       typeof(biginttest)
-   ```  
- 
+   ```
+
    * Math 내장 함수 사용 불가  
    ```javascript
       Math.pow(2,10) // 정상
       Math.pow(biginttest ,10) // 에러
-   ```  
-   
+   ```
+
   > symbol 타입: 유일한 속성 이름을 만들 때 사용하는 타입  
    *  Oject.keys와 for in loop에서 기존 메소드 변경 없이 객체에 새로운 프로퍼티 추가를 위해 사용  
- 
+
    ```javascript
       let obectTest = {}
       obectTest['1'] = 1
@@ -117,7 +123,7 @@
       console.log(obectTest)
       console.log(Object.keys(obectTest))  
    ```
- 
+
    * Symbol.for 사용시 Symbol이 싱글톤처럼 작동함  
    ```javascript
     let symbolTest = Symbol('1')
@@ -133,7 +139,7 @@
   > undefined과 null  
    * undefined: 값 할당이 한번도 안됨  
    * null: 값 할당 되었으나 값이 null인 형태 
- 
+
   > 타입 판단
    * typeof를 통해 타입을 판단함
    ```javascript
@@ -141,7 +147,7 @@
       console.log(typeof(1)) // Number
       let objectTest = {}
       console.log(typeof(objectTest)) // Object
-     
+
       let arrayTest = []
       console.log(typeof(arrayTest)) // Object
       console.log(typeof(new String('1'))) // Object
@@ -157,9 +163,9 @@
       console.log(Object.prototype.toString.call(new String('1'))) // [object String]
       console.log(Object.prototype.toString.call(null)) // [object Null]
    ```
- 
+
   > deepCopy: 위의 타입판단을 통해 깊은 복사 구현  
- 
+
   ```javascript
   let deepCopy = function (a) {
     let rst
@@ -190,13 +196,13 @@
     }
     return rst
    }
- ```
+  ```
 
 
 ### 문법
 
  > 비구조화 문법(destructuring): 배열이나 객체의 값을 변수로 쉽게 꺼낼 수 있는 문법   
- 
+
   * 장점: tmp 없이 변수의 값 교환이 용이함   
   ```javascript
      let a = 1   
@@ -208,7 +214,7 @@
      console.log({a})
      console.log({b})
   ```
- 
+
   * 객체의 비구조화는 키를 중점으로 값을 가져옴 따라서 키가 없으면 undefined가 할당됨   
   * 객체 비구조화에서 undefined만 기본값이 할당되고 null은 할당되지 않음   
 
@@ -231,14 +237,14 @@
    ```javascript  
     const name = person.friends?.[0] ?? 'default name'   
    ```
- 
+
  > shorthand property names(단축 속성명)   
   ```javascript
     // 사용 X   
     function makePerson1(age, name) {
       return {age:age, name: name};
     }
-     
+
     // 사용 O
     function makePerson2(age, name) {
       return {age, name}
@@ -262,8 +268,8 @@
     function makeObject1(key, value) {
       return { [key]: value }
     }
-   ```   
-   
+  ```
+
  > spread operator(전개 연산자): 배열이나 객체의 모든 속성을 풀어 놓을 때 사용하는 문법
   * 장점 기존의 배열이나 객체의 값을 변경 시키지 않고 깊은 복사(?, 1단계 복사)가 가능함
   ```javascript
